@@ -1,0 +1,17 @@
+package br.com.drsource.imacbrasil.security;
+
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class Credential {
+
+    private String username;
+    private String password;
+}

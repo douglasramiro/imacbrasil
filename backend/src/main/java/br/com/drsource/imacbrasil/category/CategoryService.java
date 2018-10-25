@@ -2,21 +2,27 @@ package br.com.drsource.imacbrasil.category;
 
 
 import br.com.drsource.imacbrasil.exception.ImacException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CategoryService {
 
-    @Autowired
+
     private CategoryRepository categoryRepository;
 
-    public void save(Category category) throws ImacException {
+    public CategoryService(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
+
+    @Transactional
+    public void save(@NotNull @Valid Category category) throws ImacException {
 
 
         Category exists = categoryRepository.findByName(category.getName());

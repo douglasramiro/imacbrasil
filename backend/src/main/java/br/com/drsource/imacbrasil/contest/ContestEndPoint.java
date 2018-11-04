@@ -3,6 +3,7 @@ package br.com.drsource.imacbrasil.contest;
 import br.com.drsource.imacbrasil.exception.ImacException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -23,11 +24,13 @@ public class ContestEndPoint {
     private ContestService contestService;
 
     @GetMapping
+    @PreAuthorize("hasRole('CONTEST.CAN_LIST')")
     public ResponseEntity<List<Contest>> listAll(){
         return ResponseEntity.ok(contestService.listAll());
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('CONTEST.CAN_SAVE')")
     public ResponseEntity<Void> save(@RequestBody Contest contest) throws ImacException {
         contestService.save(contest);
         URI uri = ServletUriComponentsBuilder
@@ -40,6 +43,7 @@ public class ContestEndPoint {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('CONTEST.CAN_LIST')")
     public ResponseEntity<Contest> findById(@PathVariable Short id){
         return contestService
                 .findById(id)
